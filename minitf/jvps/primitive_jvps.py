@@ -36,3 +36,9 @@ def_jvp(K.square, lambda ans, x: (
 
 def_jvp(K.average, lambda ans, x: (
     lambda g: g / K.size(x),))
+
+def_jvp(K.exp, lambda ans, x: (
+    lambda g: ans * g,))
+
+def_jvp(K.negative, lambda ans, x: (
+    lambda g: -g,))

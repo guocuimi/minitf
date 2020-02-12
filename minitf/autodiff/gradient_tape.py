@@ -27,4 +27,6 @@ class GradientTape(object):
             for neighbor, jvp in zip(neighbors, jvps):
                 outgrads[neighbor] = self._accumulate_grad(
                     outgrads.get(neighbor), jvp(parent_grad))
-        return [outgrads.get(s) for s in sources]
+        if isinstance(sources, (list, tuple)):
+            return [outgrads.get(s) for s in sources]
+        return outgrads.get(sources)

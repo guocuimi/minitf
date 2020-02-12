@@ -7,6 +7,8 @@ class Tensor(object):
 
     T = property(lambda self: Tensor(self._value.T))
 
+    def __neg__(self): return K.negative(self)
+
     def __add__(self, other): return K.add(self, other)
 
     def __sub__(self, other): return K.subtract(self, other)

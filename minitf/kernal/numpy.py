@@ -22,6 +22,8 @@ grad_functions = [
     _np.dot,
     _np.square,
     _np.average,
+    _np.exp,
+    _np.negative,
 ]
 
 

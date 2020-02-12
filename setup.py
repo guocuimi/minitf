@@ -1,5 +1,5 @@
-from setuptools import setup
 from setuptools import find_packages
+from setuptools import setup
 
 setup(
     name='minitf',
@@ -7,7 +7,7 @@ setup(
     description='Simplified version of Tensorflow for learning purposes.',
     author='Michael Mi',
     author_email='guocuimi@gmail.com',
-    install_requires=['numpy>=1.9.1'],
+    install_requires=['numpy>=1.9.1', 'matplotlib>=3.1.1'],
     keywords=['Deep learning', 'Tensorflow', 'Autodiff', 'Backpropagation',
               'Gradients', 'Neural networks', 'Python', 'Numpy'],
     url='https://github.com/guocuimi/minitf',
