@@ -4,8 +4,8 @@ from ..autodiff import primitive
 
 # ----- Non-differentiable functions -----
 nograd_functions = [
-    _np.ndim,
-    _np.shape,
+    # _np.ndim,
+    # _np.shape,
     _np.size,
     _np.zeros_like,
     _np.ones_like,
@@ -27,6 +27,14 @@ grad_functions = [
     _np.exp,
     _np.negative,
 ]
+
+
+def ndim(x):
+    return x.ndim
+
+
+def shape(x):
+    return x.shape
 
 
 def asnumpy(x):
