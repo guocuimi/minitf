@@ -1,14 +1,11 @@
-import numpy as np
-
 import minitf as tf
 
-np.random.seed(42)
-
+tf.random.seed(42)
 
 # generate some linear-looking data
 def synthetic_linear_data(w, b, num_examples):
-    X = np.random.normal(size=num_examples)
-    noise = np.random.normal(size=num_examples)
+    X = tf.random.normal(size=num_examples)
+    noise = tf.random.normal(size=num_examples)
     Y = X * w + b + noise
     return X, Y
 
@@ -35,8 +32,8 @@ def apply_gradients(grads_and_vars):
 
 
 # parameters to train
-w = tf.Tensor(np.array(5.0))
-b = tf.Tensor(np.array(0.0))
+w = tf.Tensor(tf.array(5.0))
+b = tf.Tensor(tf.array(0.0))
 parameters = [w, b]
 
 learning_rate = 0.1

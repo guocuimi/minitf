@@ -1,15 +1,15 @@
 from .graph import get_current_graph
 from .tensor import get_val, Tensor, is_tensor
 
-primitive_jvps = {}
+_PRIMITIVE_JAPS = {}
 
 
 def def_jvp(fun, jvp_maker):
-    primitive_jvps[fun] = jvp_maker
+    _PRIMITIVE_JAPS[fun] = jvp_maker
 
 
 def get_jvp_maker(fun):
-    return primitive_jvps.get(fun)
+    return _PRIMITIVE_JAPS.get(fun)
 
 
 def primitive(f_raw):

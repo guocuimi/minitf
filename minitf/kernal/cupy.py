@@ -1,4 +1,4 @@
-import numpy as _np
+import cupy as _np
 
 from ..autodiff import primitive
 
@@ -30,7 +30,7 @@ grad_functions = [
 
 
 def asnumpy(x):
-    return x
+    return _np.asnumpy(x)
 
 
 def wrap_namespace(old, new):

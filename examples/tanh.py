@@ -1,5 +1,4 @@
 import matplotlib.pyplot as plt
-import numpy as np
 
 import minitf as tf
 
@@ -9,7 +8,7 @@ def tanh(x):
     return (1.0 - y) / (1.0 + y)
 
 
-x = tf.Tensor(np.linspace(-7, 7, 200))
+x = tf.Tensor(tf.linspace(-7, 7, 200))
 with tf.GradientTape() as tp:
     tanh_val = tanh(x)
     grad_tanh = tp.gradient(tanh_val, x)

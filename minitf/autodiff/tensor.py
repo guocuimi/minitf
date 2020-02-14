@@ -28,7 +28,7 @@ class Tensor(object):
     def update_sub(self, dec): self._value -= get_val(dec)
 
     def numpy(self):
-        return self._value
+        return K.asnumpy(self._value)
 
 
 def is_tensor(x):

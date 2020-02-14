@@ -13,32 +13,41 @@ def unbroadcast(target, g):
 
 def_jvp(K.add, lambda ans, x, y: (
     lambda g: unbroadcast(x, g),
-    lambda g: unbroadcast(y, g)))
+    lambda g: unbroadcast(y, g),
+))
 
 def_jvp(K.subtract, lambda ans, x, y: (
     lambda g: unbroadcast(x, g),
-    lambda g: unbroadcast(y, -g)))
+    lambda g: unbroadcast(y, -g),
+))
 
 def_jvp(K.multiply, lambda ans, x, y: (
     lambda g: unbroadcast(x, y * g),
-    lambda g: unbroadcast(y, x * g)))
+    lambda g: unbroadcast(y, x * g),
+))
 
 def_jvp(K.divide, lambda ans, x, y: (
     lambda g: unbroadcast(x, g / y),
-    lambda g: unbroadcast(y, -g * x / y ** 2)))
+    lambda g: unbroadcast(y, -g * x / y ** 2),
+))
 
 def_jvp(K.dot, lambda ans, x, y: (
     lambda g: K.dot(g, y.T),
-    lambda g: K.dot(x.T, g)))
+    lambda g: K.dot(x.T, g),
+))
 
 def_jvp(K.square, lambda ans, x: (
-    lambda g: g * 2 * x,))
+    lambda g: g * 2 * x,
+))
 
 def_jvp(K.average, lambda ans, x: (
-    lambda g: g / K.size(x),))
+    lambda g: g / K.size(x),
+))
 
 def_jvp(K.exp, lambda ans, x: (
-    lambda g: ans * g,))
+    lambda g: ans * g,
+))
 
 def_jvp(K.negative, lambda ans, x: (
-    lambda g: -g,))
+    lambda g: -g,
+))

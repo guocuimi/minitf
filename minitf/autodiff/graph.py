@@ -12,21 +12,21 @@ class Graph(object):
         return self._edges.get(source, default)
 
 
-graph_stack = []
+_GRAPH_STACK = []
 
 
 def get_current_graph():
-    if graph_stack:
-        return graph_stack[-1]
+    if _GRAPH_STACK:
+        return _GRAPH_STACK[-1]
     return None
 
 
 def push_graph(graph):
-    graph_stack.append(graph)
+    _GRAPH_STACK.append(graph)
 
 
 def pop_graph():
-    return graph_stack.pop()
+    return _GRAPH_STACK.pop()
 
 
 def toposort(graph, source):
