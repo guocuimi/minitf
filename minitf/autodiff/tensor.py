@@ -5,7 +5,7 @@ class Tensor(object):
     def __init__(self, value):
         self._value = value
 
-    T = property(lambda self: Tensor(self._value.T))
+    data = property(lambda self: self._value)
 
     def __neg__(self): return K.negative(self)
 
@@ -36,4 +36,4 @@ def is_tensor(x):
 
 
 def get_val(x):
-    return x._value if is_tensor(x) else x
+    return x.data if is_tensor(x) else x

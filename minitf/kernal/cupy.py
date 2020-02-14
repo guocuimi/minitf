@@ -13,6 +13,7 @@ nograd_functions = [
     _np.random,
     _np.array,
     _np.linspace,
+    _np.transpose,
 ]
 
 # ----- Differentiable functions -----

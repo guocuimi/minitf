@@ -20,7 +20,7 @@ class GradientTape(object):
         return prev_g + curr_g
 
     def gradient(self, target, sources):
-        outgrads = {target: K.ones_like(target)}
+        outgrads = {target: K.ones_like(target.data)}
 
         for node, neighbors, jvps in toposort(self._graph, target):
             parent_grad = outgrads[node]

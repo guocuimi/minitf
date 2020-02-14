@@ -32,8 +32,8 @@ def_jvp(K.divide, lambda ans, x, y: (
 ))
 
 def_jvp(K.dot, lambda ans, x, y: (
-    lambda g: K.dot(g, y.T),
-    lambda g: K.dot(x.T, g),
+    lambda g: K.dot(g, K.transpose(y)),
+    lambda g: K.dot(K.transpose(x), g),
 ))
 
 def_jvp(K.square, lambda ans, x: (
@@ -50,4 +50,8 @@ def_jvp(K.exp, lambda ans, x: (
 
 def_jvp(K.negative, lambda ans, x: (
     lambda g: -g,
+))
+
+def_jvp(K.transpose, lambda ans, x: (
+    lambda g: K.transpose(g),
 ))

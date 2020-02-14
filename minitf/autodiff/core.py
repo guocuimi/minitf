@@ -15,8 +15,8 @@ def get_jvp_maker(fun):
 def primitive(f_raw):
     def f_wrapped(*args, **kwargs):
         # get actual values from tensors
-        argvals = tuple(map(get_val, args))
-        ans = Tensor(f_raw(*argvals, **kwargs))
+        arg_vals = tuple(map(get_val, args))
+        ans = Tensor(f_raw(*arg_vals, **kwargs))
 
         current_graph = get_current_graph()
         if current_graph:
@@ -24,7 +24,7 @@ def primitive(f_raw):
             jvp_maker = get_jvp_maker(f_wrapped)
             if jvp_maker is None:
                 raise Exception("Need to define jvp for the primitive")
-            all_jvps = jvp_maker(ans, *argvals, **kwargs)
+            all_jvps = jvp_maker(ans, *arg_vals, **kwargs)
 
             tensors = []
             jvps = []

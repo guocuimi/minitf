@@ -12,7 +12,7 @@ def synthetic_linear_data(w, b, num_examples):
 
 true_w = 3.0
 true_b = 2.0
-num_examples = 100
+num_examples = 500
 X, Y = synthetic_linear_data(true_w, true_b, num_examples)
 
 
