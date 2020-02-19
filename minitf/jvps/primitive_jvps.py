@@ -1,9 +1,9 @@
-from .. import kernal as K
+from .. import kernel as K
 from ..autodiff import def_jvp
 
 
 def unbroadcast(target, g):
-    while K.ndim(g) > K.ndim(target):
+    while K.rank(g) > K.rank(target):
         g = K.sum(g, axis=0)
     for axis, size in enumerate(K.shape(target)):
         if size == 1:
@@ -40,7 +40,7 @@ def_jvp(K.square, lambda ans, x: (
     lambda g: g * 2 * x,
 ))
 
-def_jvp(K.average, lambda ans, x: (
+def_jvp(K.reduce_mean, lambda ans, x: (
     lambda g: g / K.size(x),
 ))
 

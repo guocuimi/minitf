@@ -14,6 +14,8 @@ if 'MINITF_BACKEND' in os.environ:
 if _BACKEND == 'numpy':
     sys.stderr.write('Using numpy\n')
     from .numpy import *
+    from .numpy_math import *
+    from . import numpy_random as random
 elif _BACKEND == 'cupy':
     sys.stderr.write('Using cupy\n')
     try:
@@ -22,6 +24,8 @@ elif _BACKEND == 'cupy':
         sys.stderr.write('Can not load cupy, using numpy instead.\n')
         _BACKEND = 'numpy'
         from .numpy import *
+        from .numpy_math import *
+        from . import numpy_random as random
 else:
     raise ValueError('Unable to import : ' + str(_BACKEND))
 

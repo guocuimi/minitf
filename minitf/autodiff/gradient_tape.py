@@ -1,5 +1,5 @@
 from .graph import Graph, toposort, push_graph, pop_graph
-from .. import kernal as K
+from .. import kernel as K
 
 
 class GradientTape(object):

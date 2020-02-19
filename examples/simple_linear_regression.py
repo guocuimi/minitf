@@ -1,6 +1,6 @@
 import minitf as tf
 
-tf.random.seed(42)
+tf.random.set_seed(42)
 
 # generate some linear-looking data
 def synthetic_linear_data(w, b, num_examples):
@@ -23,17 +23,17 @@ def linear_model(X, W, b):
 
 # loss function
 def loss(Y_hat, Y):
-    return tf.average(tf.square(Y_hat - Y) / 2)
+    return tf.reduce_mean(tf.square(Y_hat - Y) / 2)
 
 
 def apply_gradients(grads_and_vars):
     for gradient, var in grads_and_vars:
-        var.update_sub(learning_rate * gradient)
+        var.assign_sub(learning_rate * gradient)
 
 
 # parameters to train
-w = tf.Tensor(tf.array(5.0))
-b = tf.Tensor(tf.array(0.0))
+w = tf.Variable(5.0)
+b = tf.Variable(0.0)
 parameters = [w, b]
 
 learning_rate = 0.1

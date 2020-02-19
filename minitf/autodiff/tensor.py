@@ -1,4 +1,4 @@
-from .. import kernal as K
+from .. import kernel as K
 
 
 class Tensor(object):
@@ -25,14 +25,12 @@ class Tensor(object):
 
     def __rtruediv__(self, other): return K.divide(other, self)
 
-    def update_sub(self, dec): self._value -= get_val(dec)
-
     def numpy(self):
         return K.asnumpy(self._value)
 
 
 def is_tensor(x):
-    return type(x) in [Tensor]
+    return isinstance(x, Tensor)
 
 
 def get_val(x):

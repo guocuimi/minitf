@@ -1,18 +1,21 @@
 from .graph import get_current_graph
 from .tensor import get_val, Tensor, is_tensor
 
-_PRIMITIVE_JAPS = {}
+__PRIMITIVE_JAPS = {}
 
 
 def def_jvp(fun, jvp_maker):
-    _PRIMITIVE_JAPS[fun] = jvp_maker
+    __PRIMITIVE_JAPS[fun] = jvp_maker
 
 
 def get_jvp_maker(fun):
-    return _PRIMITIVE_JAPS.get(fun)
+    return __PRIMITIVE_JAPS.get(fun)
 
 
 def primitive(f_raw):
+    """
+    Wraps a funtion so that its gradient (JVP) can be specified and its invocation can be recorded.
+    """
     def f_wrapped(*args, **kwargs):
         # get actual values from tensors
         arg_vals = tuple(map(get_val, args))
@@ -36,5 +39,19 @@ def primitive(f_raw):
             # register grad func for each tensor
             current_graph.add_edges(ans, tensors, jvps)
         return ans
+
+    return f_wrapped
+
+
+def notrace_primitive(f_raw, as_tensor=True):
+    """
+    Wraps a function so that it takes Tensor as input and returns Tensor.
+    """
+
+    def f_wrapped(*args, **kwargs):
+        # get actual values from tensors
+        arg_vals = tuple(map(get_val, args))
+        ans = f_raw(*arg_vals, **kwargs)
+        return Tensor(ans) if as_tensor else ans
 
     return f_wrapped
