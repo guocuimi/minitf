@@ -28,7 +28,7 @@ def_jvp(K.multiply, lambda ans, x, y: (
 
 def_jvp(K.divide, lambda ans, x, y: (
     lambda g: unbroadcast(x, g / y),
-    lambda g: unbroadcast(y, -g * x / y ** 2),
+    lambda g: unbroadcast(y, -g * x / (y * y)),
 ))
 
 def_jvp(K.dot, lambda ans, x, y: (

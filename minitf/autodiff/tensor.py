@@ -3,9 +3,7 @@ from .. import kernel as K
 
 class Tensor(object):
     def __init__(self, value):
-        self._value = value
-
-    data = property(lambda self: self._value)
+        self._value = get_val(value)
 
     def __neg__(self): return K.negative(self)
 
@@ -25,8 +23,10 @@ class Tensor(object):
 
     def __rtruediv__(self, other): return K.divide(other, self)
 
-    def numpy(self):
-        return K.asnumpy(self._value)
+    def numpy(self): return K.asnumpy(self._value)
+
+    @property
+    def data(self): return self._value
 
 
 def is_tensor(x):

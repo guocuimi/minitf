@@ -2,6 +2,7 @@ import minitf as tf
 
 tf.random.set_seed(42)
 
+
 # generate some linear-looking data
 def synthetic_linear_data(w, b, num_examples):
     X = tf.random.normal(size=num_examples)
