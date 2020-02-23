@@ -1,0 +1,18 @@
+sudo: false
+notifications:
+  email: false
+language: python
+python:
+  - "3.7"
+env:
+  - DEPS="pip pytest numpy"
+install:
+  - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
+  - bash miniconda.sh -b -p $HOME/miniconda
+  - export PATH="$HOME/miniconda/bin:$PATH"
+  - conda update --yes conda
+  - conda config --add channels conda-forge
+  - conda install --yes python=$TRAVIS_PYTHON_VERSION $DEPS
+  - pip install -v .
+script:
+  - (cd tests; python -mpytest .)  # Run from inside tests directory.
