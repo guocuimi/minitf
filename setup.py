@@ -3,14 +3,14 @@ from setuptools import setup
 
 setup(
     name='minitf',
-    version='0.1',
+    version='0.2.1',
     description='Simplified version of Tensorflow for learning purposes.',
     author='Michael Mi',
     author_email='guocuimi@gmail.com',
     install_requires=['numpy>=1.9.1', 'matplotlib>=3.1.1'],
     keywords=['Deep learning', 'Tensorflow', 'Autodiff', 'Backpropagation',
               'Gradients', 'Neural networks', 'Python', 'Numpy'],
-    url='https://github.com/guocuimi/minitf',
+    url='https://guocuimi.github.io/minitf/',
     license='MIT',
     classifiers=['Development Status :: 1 - Planning',
                  'Intended Audience :: Developers',
