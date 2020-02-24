@@ -23,6 +23,20 @@ class Tensor(object):
 
     def __rtruediv__(self, other): return K.divide(other, self)
 
+    def __eq__(self, other): return K.equal(self, other)
+
+    def __ne__(self, other): return K.not_equal(self, other)
+
+    def __gt__(self, other): return K.greater(self, other)
+
+    def __ge__(self, other): return K.greater_equal(self, other)
+
+    def __lt__(self, other): return K.less(self, other)
+
+    def __le__(self, other): return K.less_equal(self, other)
+
+    def __hash__(self): return id(self)
+
     def numpy(self): return K.asnumpy(self._value)
 
     @property

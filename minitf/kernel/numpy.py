@@ -8,12 +8,21 @@ from ..autodiff import (
 # ----- Non-differentiable functions -----
 rank = notrace_primitive(_np.ndim, as_tensor=False)
 shape = notrace_primitive(_np.shape, as_tensor=False)
+allclose = notrace_primitive(_np.allclose, as_tensor=False)
 
 # Always return Tensor object
 size = notrace_primitive(_np.size)
 zeros_like = notrace_primitive(_np.zeros_like)
 ones_like = notrace_primitive(_np.ones_like)
 linspace = notrace_primitive(_np.linspace)
+
+# Compare ops
+equal = notrace_primitive(_np.equal)
+not_equal = notrace_primitive(_np.not_equal)
+greater = notrace_primitive(_np.greater)
+greater_equal = notrace_primitive(_np.greater_equal)
+less = notrace_primitive(_np.less)
+less_equal = notrace_primitive(_np.less_equal)
 
 # temporarily put it here as nograd function
 sum = notrace_primitive(_np.sum)
