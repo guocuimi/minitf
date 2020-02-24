@@ -1,6 +1,5 @@
 import minitf as tf
 
-
 def unbroadcast(target, g):
     while tf.rank(g) > tf.rank(target):
         g = tf.sum(g, axis=0)

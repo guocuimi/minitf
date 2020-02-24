@@ -1,4 +1,4 @@
-from .. import kernel as K
+from minitf import kernel as K
 
 
 class Tensor(object):
@@ -36,6 +36,12 @@ class Tensor(object):
     def __le__(self, other): return K.less_equal(self, other)
 
     def __hash__(self): return id(self)
+
+    def __str__(self):
+        return "tf.Tensor(id=%s, shape=%s, numpy=%s)" % (id(self), K.shape(self.numpy()), str(self.numpy()))
+
+    def __repr__(self):
+        return "<tf.Tensor: id=%s, shape=%s, numpy=%s>" % (id(self), K.shape(self.numpy()), self.numpy())
 
     def numpy(self): return K.asnumpy(self._value)
 

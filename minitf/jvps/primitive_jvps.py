@@ -1,5 +1,5 @@
-from .. import kernel as K
-from ..autodiff import def_jvp
+from minitf import kernel as K
+from minitf.jvps.jvp_maker import def_jvp
 
 
 def unbroadcast(target, g):

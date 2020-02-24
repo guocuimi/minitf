@@ -1,13 +1,6 @@
-from .core import def_jvp
-from .core import primitive
-from .core import notrace_primitive
+from __future__ import absolute_import
 
-from .gradient_tape import GradientTape
+from minitf.autodiff.gradient_tape import GradientTape
+from minitf.autodiff.util import to_list
 
-from .tensor import Tensor
-from .tensor import get_val
-from .tensor import is_tensor
-
-from .variable import Variable
-
-from .util import to_list
+del absolute_import

@@ -1,6 +1,6 @@
 import numpy as _np
 
-from ..autodiff import primitive
+from minitf.kernel.core import primitive
 
 # ----- Differentiable functions -----
 add = primitive(_np.add)

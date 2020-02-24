@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name='minitf',
-    version='0.2.1',
+    version='0.2.2',
     description='Simplified version of Tensorflow for learning purposes.',
     author='Michael Mi',
     author_email='guocuimi@gmail.com',

@@ -1,4 +1,5 @@
-from .util import to_list
+from minitf.autodiff.util import to_list
+from minitf.tensor import is_tensor
 
 
 class Graph(object):
@@ -51,3 +52,24 @@ def toposort(graph, source):
                 childless_nodes.append(neighbor)
             else:
                 child_counts[neighbor] -= 1
+
+
+def register_op(func, ans, *args, **kwargs):
+    current_graph = get_current_graph()
+    if current_graph:
+        # make jvp functions
+        from minitf.jvps.jvp_maker import get_jvp_maker
+        jvp_maker = get_jvp_maker(func)
+        if jvp_maker is None:
+            raise Exception("Need to define jvp for the primitive")
+        all_jvps = jvp_maker(ans, *args, **kwargs)
+
+        tensors = []
+        jvps = []
+        for arg, jvp in zip(args, all_jvps):
+            if is_tensor(arg):
+                tensors.append(arg)
+                jvps.append(jvp)
+
+        # register grad func for each tensor
+        current_graph.add_edges(ans, tensors, jvps)

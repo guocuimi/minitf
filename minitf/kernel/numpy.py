@@ -1,9 +1,7 @@
 import numpy as _np
 
-from ..autodiff import (
-    primitive,
-    notrace_primitive,
-)
+from minitf.kernel.core import notrace_primitive
+from minitf.kernel.core import primitive
 
 # ----- Non-differentiable functions -----
 rank = notrace_primitive(_np.ndim, as_tensor=False)

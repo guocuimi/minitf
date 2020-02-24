@@ -1,5 +1,8 @@
-from .graph import Graph, toposort, push_graph, pop_graph
-from .. import kernel as K
+from minitf import kernel as K
+from minitf.autodiff.graph import Graph
+from minitf.autodiff.graph import pop_graph
+from minitf.autodiff.graph import push_graph
+from minitf.autodiff.graph import toposort
 
 
 class GradientTape(object):

@@ -1,6 +1,6 @@
 import cupy as _np
 
-from ..autodiff import primitive
+from minitf.kernel.core import primitive
 
 # ----- Non-differentiable functions -----
 nograd_functions = [

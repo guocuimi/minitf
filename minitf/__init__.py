@@ -1,6 +1,7 @@
-# always load kernel first
-from .kernel import *
-# load autodiff after kernel
-from .autodiff import *
-# then load jvps
-from .jvps import *
+import minitf.kernel
+from minitf import kernel
+from minitf.autodiff import GradientTape
+from minitf.jvps import def_jvp
+from minitf.kernel import *
+from minitf.tensor import Tensor
+from minitf.variable import Variable
