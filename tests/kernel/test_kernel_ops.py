@@ -1,7 +1,8 @@
 import pytest
 
 import minitf as tf
-from minitf.test_util import check_gradients, gradients
+from minitf.test_util import check_gradients
+from minitf.test_util import gradients
 
 tf.random.set_seed(10)
 
@@ -60,3 +61,19 @@ def test_transpose(arg):
     grads = gradients(lambda x: tf.transpose(x), [arg])
     assert len(grads) == 1
     assert grads[0] == tf.ones_like(grads[0])
+
+
+def test_maximum():
+    check_gradients(lambda x: tf.maximum(x, x),
+                    [tf.random.randn(4)])
+
+    check_gradients(lambda x, y: tf.maximum(x, y),
+                    [tf.random.randn(4), tf.random.randn(4)])
+
+
+def test_minimum():
+    check_gradients(lambda x: tf.minimum(x, x),
+                    [tf.random.randn(4)])
+
+    check_gradients(lambda x, y: tf.minimum(x, y),
+                    [tf.random.randn(4), tf.random.randn(4)])

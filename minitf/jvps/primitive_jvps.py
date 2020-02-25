@@ -2,6 +2,7 @@ from minitf import kernel as K
 from minitf.jvps.jvp_maker import def_jvp
 
 
+# Stolen from autograd library
 def unbroadcast(target, g):
     while K.rank(g) > K.rank(target):
         g = K.sum(g, axis=0)
@@ -9,6 +10,10 @@ def unbroadcast(target, g):
         if size == 1:
             g = K.sum(g, axis=axis, keepdims=True)
     return g
+
+
+def balanced_eq(x, z, y):
+    return (x == z) / (1.0 + (x == y))
 
 
 def_jvp(K.add, lambda ans, x, y: (
@@ -54,4 +59,14 @@ def_jvp(K.negative, lambda ans, x: (
 
 def_jvp(K.transpose, lambda ans, x: (
     lambda g: K.transpose(g),
+))
+
+def_jvp(K.maximum, lambda ans, x, y: (
+    lambda g: g * balanced_eq(x, ans, y),
+    lambda g: g * balanced_eq(y, ans, x),
+))
+
+def_jvp(K.minimum, lambda ans, x, y: (
+    lambda g: g * balanced_eq(x, ans, y),
+    lambda g: g * balanced_eq(y, ans, x),
 ))
