@@ -70,3 +70,7 @@ def_jvp(K.minimum, lambda ans, x, y: (
     lambda g: g * balanced_eq(x, ans, y),
     lambda g: g * balanced_eq(y, ans, x),
 ))
+
+def_jvp(K.cast, lambda ans, x, dtype: (
+    lambda g: K.cast(g, x.dtype),
+))

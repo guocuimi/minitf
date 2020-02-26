@@ -77,3 +77,12 @@ def test_minimum():
 
     check_gradients(lambda x, y: tf.minimum(x, y),
                     [tf.random.randn(4), tf.random.randn(4)])
+
+
+def test_cast():
+    vec = tf.random.normal((10, 20), 0, 0.5, dtype=tf.float64)
+    assert vec.dtype == tf.float64
+
+    grads = gradients(lambda x: tf.cast(x, tf.int32), [vec])
+    assert len(grads) == 1
+    assert grads[0].dtype == tf.dtype("float64")

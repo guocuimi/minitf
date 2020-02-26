@@ -5,8 +5,8 @@ tf.random.set_seed(42)
 
 # generate some linear-looking data
 def synthetic_linear_data(w, b, num_examples):
-    X = tf.random.normal(size=num_examples)
-    noise = tf.random.normal(size=num_examples)
+    X = tf.random.normal(num_examples, dtype=tf.float32)
+    noise = tf.random.normal(num_examples, dtype=tf.float32)
     Y = X * w + b + noise
     return X, Y
 
@@ -33,8 +33,8 @@ def apply_gradients(grads_and_vars):
 
 
 # parameters to train
-w = tf.Variable(5.0)
-b = tf.Variable(0.0)
+w = tf.Variable(tf.constant(5.0))
+b = tf.Variable(tf.constant(0.0))
 parameters = [w, b]
 
 learning_rate = 0.1

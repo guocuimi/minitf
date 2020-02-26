@@ -3,6 +3,7 @@ from minitf import kernel as K
 
 class Tensor(object):
     def __init__(self, value):
+        # TODO: cast to numpy array
         self._value = get_val(value)
 
     def __neg__(self): return K.negative(self)
@@ -38,15 +39,22 @@ class Tensor(object):
     def __hash__(self): return id(self)
 
     def __str__(self):
-        return "tf.Tensor(id=%s, shape=%s, numpy=%s)" % (id(self), K.shape(self.numpy()), str(self.numpy()))
+        numpy_obj = self.numpy()
+        return "tf.Tensor(id=%s, shape=%s, dtype=%s, numpy=%s)" % (
+            id(self), K.shape(numpy_obj), self.dtype, str(numpy_obj))
 
     def __repr__(self):
-        return "<tf.Tensor: id=%s, shape=%s, numpy=%s>" % (id(self), K.shape(self.numpy()), self.numpy())
+        numpy_obj = self.numpy()
+        return "<tf.Tensor: id=%s, shape=%s, dtype=%s, numpy=%s>" % (
+            id(self), K.shape(numpy_obj), self.dtype, numpy_obj)
 
     def numpy(self): return K.asnumpy(self._value)
 
     @property
     def data(self): return self._value
+
+    @property
+    def dtype(self): return getattr(self._value, 'dtype', None)
 
 
 def is_tensor(x):
