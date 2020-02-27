@@ -1,18 +1,27 @@
-sudo: false
-notifications:
-  email: false
 language: python
 python:
-  - "3.7"
-env:
-  - DEPS="pip pytest numpy"
+  - 2.7
+  - 3.5
+  - 3.6
+  - 3.7
 install:
-  - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
-  - bash miniconda.sh -b -p $HOME/miniconda
-  - export PATH="$HOME/miniconda/bin:$PATH"
-  - conda update --yes conda
-  - conda config --add channels conda-forge
-  - conda install --yes python=$TRAVIS_PYTHON_VERSION $DEPS
-  - pip install -v .
+  - pip install -e .
+  - pip install -r requirements.txt
+  - pip install pytest pytest-cov flake8
 script:
-  - (cd tests; python -mpytest .)  # Run from inside tests directory.
+  # stop the build if there are Python syntax errors or undefined names
+  - flake8 . --builtins=d,minitf,numpy --count --exclude=tests --select=E901,E999,F821,F822,F823 --show-source --statistics
+  - pytest --cov=minitf tests/
+after_success:
+  - coveralls
+notifications:
+  email:
+    on_success: change
+    on_failure: change
+deploy:
+  provider: pypi
+  user: guocuimi
+  password:
+    secure: pypi-AgEIcHlwaS5vcmcCJDZkNDMwMzZmLTU0ZTktNGEzNS1hMTk1LTEwYWE1ZGVlNjg3ZQACN3sicGVybWlzc2lvbnMiOiB7InByb2plY3RzIjogWyJtaW5pdGYiXX0sICJ2ZXJzaW9uIjogMX0AAAYgcRmj3EKq7VqS1CkeehXVLfvmzy9-Pgm_BSZUeMkRZUA
+  on:
+    tags: true
