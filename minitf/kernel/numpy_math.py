@@ -1,5 +1,6 @@
 import numpy as _np
 
+from minitf.kernel.core import notrace_primitive
 from minitf.kernel.core import primitive
 
 # ----- Differentiable functions -----
@@ -14,3 +15,6 @@ exp = primitive(_np.exp)
 negative = primitive(_np.negative)
 maximum = primitive(_np.maximum)
 minimum = primitive(_np.minimum)
+
+# temporarily put it here as nograd function
+reduce_sum = notrace_primitive(_np.sum)

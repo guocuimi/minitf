@@ -43,22 +43,22 @@ def test_divide(arg_x, arg_y):
 # ------- Unary ops -------
 @pytest.mark.parametrize('arg', gen_args())
 def test_square(arg):
-    check_gradients(lambda x: tf.square(x), [arg])
+    check_gradients(tf.square, [arg])
 
 
 @pytest.mark.parametrize('arg', gen_args())
 def test_exp(arg):
-    check_gradients(lambda x: tf.exp(x), [arg])
+    check_gradients(tf.exp, [arg])
 
 
 @pytest.mark.parametrize('arg', gen_args())
 def test_negative(arg):
-    check_gradients(lambda x: tf.negative(x), [arg])
+    check_gradients(tf.negative, [arg])
 
 
 @pytest.mark.parametrize('arg', gen_args())
 def test_transpose(arg):
-    grads = gradients(lambda x: tf.transpose(x), [arg])
+    grads = gradients(tf.transpose, [arg])
     assert len(grads) == 1
     assert grads[0] == tf.ones_like(grads[0])
 
@@ -75,7 +75,7 @@ def test_minimum():
     check_gradients(lambda x: tf.minimum(x, x),
                     [tf.random.randn(4)])
 
-    check_gradients(lambda x, y: tf.minimum(x, y),
+    check_gradients(tf.minimum,
                     [tf.random.randn(4), tf.random.randn(4)])
 
 
@@ -89,3 +89,14 @@ def test_cast():
     grads = gradients(lambda x: tf.cast(x, tf.int32), [vec])
     assert len(grads) == 1
     assert grads[0].dtype == tf.dtype("float64")
+
+
+def test_dot():
+    mat1 = tf.random.randn(50, 11)
+    mat2 = tf.random.randn(11, 40)
+    # vect1 = tf.random.randn(10)
+    # vect2 = tf.random.randn(11)
+    fun = lambda x, y: tf.dot(x, y)
+    check_gradients(fun, [mat1, mat2])
+    # check_gradients(fun, [vect1, mat1])
+    # check_gradients(fun, [vect2, mat2])

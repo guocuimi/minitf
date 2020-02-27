@@ -44,9 +44,6 @@ greater_equal = notrace_primitive(_np.greater_equal)
 less = notrace_primitive(_np.less)
 less_equal = notrace_primitive(_np.less_equal)
 
-# temporarily put it here as nograd function
-sum = notrace_primitive(_np.sum)
-
 transpose = primitive(_np.transpose)
 
 

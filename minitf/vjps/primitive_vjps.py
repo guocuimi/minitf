@@ -5,10 +5,10 @@ from minitf.vjps.vjp_maker import def_vjp_maker
 # Stolen from autograd library
 def unbroadcast(target, g):
     while K.rank(g) > K.rank(target):
-        g = K.sum(g, axis=0)
+        g = K.reduce_sum(g, axis=0)
     for axis, size in enumerate(K.shape(target)):
         if size == 1:
-            g = K.sum(g, axis=axis, keepdims=True)
+            g = K.reduce_sum(g, axis=axis, keepdims=True)
     return g
 
 
