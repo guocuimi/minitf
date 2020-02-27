@@ -80,8 +80,11 @@ def test_minimum():
 
 
 def test_cast():
-    vec = tf.random.normal((10, 20), 0, 0.5, dtype=tf.float64)
+    vec = tf.random.normal((10, 20), 0, 200.0, dtype=tf.float64)
     assert vec.dtype == tf.float64
+
+    casted_vec = tf.cast(vec, tf.int32)
+    assert casted_vec.dtype == tf.int32
 
     grads = gradients(lambda x: tf.cast(x, tf.int32), [vec])
     assert len(grads) == 1

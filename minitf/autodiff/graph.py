@@ -45,8 +45,8 @@ def toposort(graph, source):
     childless_nodes = [source]
     while childless_nodes:
         node = childless_nodes.pop()
-        neighbors, jvps = graph.get_targets(node, ([], []))
-        yield node, neighbors, jvps
+        neighbors, vjps = graph.get_targets(node, ([], []))
+        yield node, neighbors, vjps
         for neighbor in neighbors:
             if child_counts[neighbor] == 1:
                 childless_nodes.append(neighbor)
@@ -57,19 +57,19 @@ def toposort(graph, source):
 def register_op(func, ans, *args, **kwargs):
     current_graph = get_current_graph()
     if current_graph:
-        # make jvp functions
-        from minitf.jvps.jvp_maker import get_jvp_maker
-        jvp_maker = get_jvp_maker(func)
-        if jvp_maker is None:
-            raise Exception("Need to define jvp for the primitive")
-        all_jvps = jvp_maker(ans, *args, **kwargs)
+        # make vjp functions
+        from minitf.vjps.vjp_maker import get_vjp_maker
+        vjp_maker = get_vjp_maker(func)
+        if vjp_maker is None:
+            raise Exception("Need to define vjp for the primitive")
+        all_vjps = vjp_maker(ans, *args, **kwargs)
 
         tensors = []
-        jvps = []
-        for arg, jvp in zip(args, all_jvps):
+        vjps = []
+        for arg, vjp in zip(args, all_vjps):
             if is_tensor(arg):
                 tensors.append(arg)
-                jvps.append(jvp)
+                vjps.append(vjp)
 
         # register grad func for each tensor
-        current_graph.add_edges(ans, tensors, jvps)
+        current_graph.add_edges(ans, tensors, vjps)

@@ -61,11 +61,13 @@ def constant(value, dtype=None, shape=None):
     if isinstance(value, _np.ndarray):
         return value
 
-    if dtype is None:
-        dtype = floatx()
-
     # construct numpy array with value and dtype
     t = _np.array(value, dtype=dtype)
+
+    # cast down from 64 bits to 32 bits if necessary
+    if dtype is None and t.dtype != floatx() and t.dtype == _np.float64:
+        t = t.astype(floatx())
+
     if shape is None or _np.shape(t) == shape:
         return t
 

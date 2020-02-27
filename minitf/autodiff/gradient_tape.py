@@ -25,11 +25,11 @@ class GradientTape(object):
     def gradient(self, target, sources):
         outgrads = {target: K.ones_like(target)}
 
-        for node, neighbors, jvps in toposort(self._graph, target):
+        for node, neighbors, vjps in toposort(self._graph, target):
             parent_grad = outgrads[node]
-            for neighbor, jvp in zip(neighbors, jvps):
+            for neighbor, vjp in zip(neighbors, vjps):
                 outgrads[neighbor] = self._accumulate_grad(
-                    outgrads.get(neighbor), jvp(parent_grad))
+                    outgrads.get(neighbor), vjp(parent_grad))
         if isinstance(sources, (list, tuple)):
             return [outgrads.get(s) for s in sources]
         return outgrads.get(sources)

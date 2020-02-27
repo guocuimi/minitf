@@ -1,6 +1,6 @@
 def primitive(f_raw):
     """
-    Wraps a funtion so that its gradient (JVP) can be specified and its invocation can be recorded.
+    Wraps a funtion so that its gradient (VJP) can be specified and its invocation can be recorded.
     """
     from minitf.tensor import get_val, Tensor
     def f_wrapped(*args, **kwargs):
