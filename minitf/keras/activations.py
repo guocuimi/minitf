@@ -3,6 +3,10 @@ from __future__ import absolute_import
 import minitf as tf
 
 
+def elu(x, alpha=0.1):
+    return tf.where(x > 0, x, alpha * (tf.exp(x) - 1.))
+
+
 def relu(x):
     return tf.maximum(0, x)
 
@@ -32,7 +36,7 @@ def get(identifier):
         cls = globals().get(identifier)
         if cls is None:
             raise ValueError('Unknown activation function: {}'.format(identifier))
-        return cls()
+        return cls
     elif callable(identifier):
         return identifier
     else:

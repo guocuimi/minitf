@@ -40,6 +40,21 @@ def test_divide(arg_x, arg_y):
     check_gradients(lambda x, y: x / y, [arg_x, arg_y], atol=1e-2, rtol=1e-2)
 
 
+@pytest.mark.parametrize('arg_x', gen_args())
+@pytest.mark.parametrize('arg_y', gen_args())
+def test_maximum(arg_x, arg_y):
+    check_gradients(lambda x: tf.maximum(x, x), [arg_x])
+    check_gradients(lambda x: tf.maximum(x, x), [arg_y])
+    check_gradients(tf.maximum, [arg_x, arg_y])
+
+
+@pytest.mark.parametrize('arg_x', gen_args())
+@pytest.mark.parametrize('arg_y', gen_args())
+def test_minimum(arg_x, arg_y):
+    check_gradients(lambda x: tf.minimum(x, x), [arg_x])
+    check_gradients(lambda x: tf.minimum(x, x), [arg_y])
+    check_gradients(tf.maximum, [arg_x, arg_y])
+
 # ------- Unary ops -------
 @pytest.mark.parametrize('arg', gen_args())
 def test_square(arg):
@@ -57,26 +72,34 @@ def test_negative(arg):
 
 
 @pytest.mark.parametrize('arg', gen_args())
+def test_flatten(arg):
+    check_gradients(tf.flatten, [arg])
+
+
+def test_flatten_basic():
+    arg = tf.random.randn(3, 4, 5)
+    check_gradients(tf.flatten, [arg])
+
+
+@pytest.mark.parametrize('arg', gen_args())
+def test_reshape(arg):
+    check_gradients(lambda x: tf.reshape(x, (-1)), [arg])
+
+
+def test_reshape_basic():
+    arg = tf.random.randn(3, 4, 5)
+    check_gradients(lambda x: tf.reshape(x, (5, 12)), [arg])
+
+
+@pytest.mark.parametrize('arg', gen_args())
 def test_transpose(arg):
-    grads = gradients(tf.transpose, [arg])
-    assert len(grads) == 1
-    assert grads[0] == tf.ones_like(grads[0])
+    check_gradients(tf.transpose, [arg])
 
 
-def test_maximum():
-    check_gradients(lambda x: tf.maximum(x, x),
-                    [tf.random.randn(4)])
-
-    check_gradients(lambda x, y: tf.maximum(x, y),
-                    [tf.random.randn(4), tf.random.randn(4)])
-
-
-def test_minimum():
-    check_gradients(lambda x: tf.minimum(x, x),
-                    [tf.random.randn(4)])
-
-    check_gradients(tf.minimum,
-                    [tf.random.randn(4), tf.random.randn(4)])
+@pytest.mark.parametrize('arg', gen_args())
+def test_where(arg):
+    check_gradients(lambda x: tf.where(x > 0, x, x), [arg])
+    check_gradients(lambda x: tf.where(x > 0, x, x * 2), [arg])
 
 
 def test_cast():
@@ -96,7 +119,6 @@ def test_dot():
     mat2 = tf.random.randn(11, 40)
     # vect1 = tf.random.randn(10)
     # vect2 = tf.random.randn(11)
-    fun = lambda x, y: tf.dot(x, y)
-    check_gradients(fun, [mat1, mat2])
+    check_gradients(tf.dot, [mat1, mat2])
     # check_gradients(fun, [vect1, mat1])
     # check_gradients(fun, [vect2, mat2])

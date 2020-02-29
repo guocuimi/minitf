@@ -22,14 +22,16 @@ class GradientTape(object):
             return curr_g
         return prev_g + curr_g
 
-    def gradient(self, target, sources):
-        outgrads = {target: K.ones_like(target)}
+    def gradient(self, target, sources, output_grad=None):
+        if output_grad is None:
+            output_grad = K.ones_like(target)
+        out_grads = {target: output_grad}
 
         for node, neighbors, vjps in toposort(self._graph, target):
-            parent_grad = outgrads[node]
+            parent_grad = out_grads[node]
             for neighbor, vjp in zip(neighbors, vjps):
-                outgrads[neighbor] = self._accumulate_grad(
-                    outgrads.get(neighbor), vjp(parent_grad))
+                out_grads[neighbor] = self._accumulate_grad(
+                    out_grads.get(neighbor), vjp(parent_grad))
         if isinstance(sources, (list, tuple)):
-            return [outgrads.get(s) for s in sources]
-        return outgrads.get(sources)
+            return type(sources)(out_grads.get(s) for s in sources)
+        return out_grads.get(sources)

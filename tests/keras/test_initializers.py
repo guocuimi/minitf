@@ -46,17 +46,17 @@ def test_normal(shape):
 def test_glorot_uniform(shape):
     fan_in, fan_out = initializers._compute_fans(shape)
     std = math.sqrt(2. / (fan_in + fan_out))
-    _runner(initializers.glorot_uniform(), shape,
-            target_mean=0., target_std=std)
+    _runner(initializers.glorot_uniform(), shape, target_mean=0., target_std=std)
+    _runner(initializers.get('glorot_uniform'), shape, target_mean=0., target_std=std)
 
 
 @pytest.mark.parametrize('shape', _shapes)
 def test_zero(shape):
-    _runner(initializers.zeros(), shape,
-            target_mean=0., target_max=0.)
+    _runner(initializers.zeros(), shape, target_mean=0., target_max=0.)
+    _runner(initializers.get('zeros'), shape, target_mean=0., target_max=0.)
 
 
 @pytest.mark.parametrize('shape', _shapes)
 def test_one(shape):
-    _runner(initializers.ones(), shape,
-            target_mean=1., target_max=1.)
+    _runner(initializers.ones(), shape, target_mean=1., target_max=1.)
+    _runner(initializers.get('ones'), shape, target_mean=1., target_max=1.)

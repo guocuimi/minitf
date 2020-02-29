@@ -45,20 +45,26 @@ less = notrace_primitive(_np.less)
 less_equal = notrace_primitive(_np.less_equal)
 
 transpose = primitive(_np.transpose)
-
+reshape = primitive(_np.reshape)
+where = primitive(_np.where)
 
 @primitive
 def cast(x, dtype):
     return x.astype(dtype)
 
 
+@primitive
+def flatten(x):
+    if hasattr(x, 'flatten'):
+        return x.flatten()
+    # convert to 1D array
+    return _np.array([x])
+
+
 @notrace_primitive
 def constant(value, dtype=None, shape=None):
-    # already a numpy array, just return
-    if isinstance(value, _np.ndarray):
-        return value
-
     # construct numpy array with value and dtype
+    # would make a copy even if the value is already a numpy.array
     t = _np.array(value, dtype=dtype)
 
     # cast down from 64 bits to 32 bits if necessary

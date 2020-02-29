@@ -45,6 +45,7 @@ def_vjp_maker(K.square, lambda ans, x: (
     lambda g: g * 2 * x,
 ))
 
+# Need to update.
 def_vjp_maker(K.reduce_mean, lambda ans, x: (
     lambda g: g / K.size(x),
 ))
@@ -62,15 +63,29 @@ def_vjp_maker(K.transpose, lambda ans, x: (
 ))
 
 def_vjp_maker(K.maximum, lambda ans, x, y: (
-    lambda g: g * balanced_eq(x, ans, y),
-    lambda g: g * balanced_eq(y, ans, x),
+    lambda g: unbroadcast(x, g * balanced_eq(x, ans, y)),
+    lambda g: unbroadcast(y, g * balanced_eq(y, ans, x)),
 ))
 
 def_vjp_maker(K.minimum, lambda ans, x, y: (
-    lambda g: g * balanced_eq(x, ans, y),
-    lambda g: g * balanced_eq(y, ans, x),
+    lambda g: unbroadcast(x, g * balanced_eq(x, ans, y)),
+    lambda g: unbroadcast(y, g * balanced_eq(y, ans, x)),
 ))
 
 def_vjp_maker(K.cast, lambda ans, x, dtype: (
     lambda g: K.cast(g, x.dtype),
+))
+
+def_vjp_maker(K.reshape, lambda ans, x, shape: (
+    lambda g: K.reshape(g, K.shape(x)),
+))
+
+def_vjp_maker(K.flatten, lambda ans, x: (
+    lambda g: K.reshape(g, K.shape(x)),
+))
+
+def_vjp_maker(K.where, lambda ans, c, x, y: (
+    lambda g: None,  # no vjp for condition parameter
+    lambda g: K.where(c, g, K.zeros_like(g)),
+    lambda g: K.where(c, K.zeros_like(g), g),
 ))
