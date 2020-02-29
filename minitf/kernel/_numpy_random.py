@@ -1,7 +1,7 @@
 import numpy.random as _npr
 
 from minitf.kernel.core import notrace_primitive
-from minitf.kernel.numpy import floatx
+from minitf.kernel._numpy import floatx
 
 set_seed = _npr.seed
 randn = notrace_primitive(_npr.randn)

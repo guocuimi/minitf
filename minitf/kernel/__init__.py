@@ -1,5 +1,3 @@
-from __future__ import absolute_import
-
 import os
 import sys
 
@@ -17,10 +15,10 @@ if 'MINITF_BACKEND' in os.environ:
 # Import backend functions.
 if _BACKEND == 'numpy':
     sys.stderr.write('Using numpy\n')
-    from minitf.kernel.numpy import *
-    from minitf.kernel.numpy_math import *
-    from minitf.kernel import numpy_math as math
-    from minitf.kernel import numpy_random as random
+    from minitf.kernel._numpy import *
+    from minitf.kernel._numpy_math import *
+    from minitf.kernel import _numpy_math as math
+    from minitf.kernel import _numpy_random as random
 elif _BACKEND == 'cupy':
     sys.stderr.write('Using cupy\n')
     try:
@@ -28,10 +26,10 @@ elif _BACKEND == 'cupy':
     except ImportError:
         sys.stderr.write('Can not load cupy, using numpy instead.\n')
         _BACKEND = 'numpy'
-        from minitf.kernel.numpy import *
-        from minitf.kernel.numpy_math import *
-        from minitf.kernel import numpy_math as math
-        from minitf.kernel import numpy_random as random
+        from minitf.kernel._numpy import *
+        from minitf.kernel._numpy_math import *
+        from minitf.kernel import _numpy_math as math
+        from minitf.kernel import _numpy_random as random
 else:
     raise ValueError('Unable to import : ' + str(_BACKEND))
 
@@ -39,5 +37,3 @@ else:
 def backend():
     return _BACKEND
 
-
-del absolute_import

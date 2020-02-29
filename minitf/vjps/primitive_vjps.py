@@ -1,5 +1,5 @@
 from minitf import kernel as K
-from minitf.vjps.vjp_maker import def_vjp_maker
+from minitf.autodiff.vjp_maker import def_vjp_maker
 
 
 # Stolen from autograd library

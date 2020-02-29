@@ -12,7 +12,7 @@ with open('requirements.txt') as f:
 
 setup(
     name='minitf',
-    version='0.2.2.2',
+    version='0.1.1.4',
     description='Simplified version of Tensorflow for learning purposes.',
     long_description=readme,
     author='Michael Mi',

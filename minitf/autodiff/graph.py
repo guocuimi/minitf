@@ -1,4 +1,5 @@
 from minitf.autodiff.util import to_list
+from minitf.autodiff.vjp_maker import get_vjp_maker
 from minitf.tensor import is_tensor
 
 
@@ -58,7 +59,6 @@ def register_op(func, ans, *args, **kwargs):
     current_graph = get_current_graph()
     if current_graph:
         # make vjp functions
-        from minitf.vjps.vjp_maker import get_vjp_maker
         vjp_maker = get_vjp_maker(func)
         if vjp_maker is None:
             raise Exception("Need to define vjp for the primitive")
