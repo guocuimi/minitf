@@ -25,3 +25,7 @@ deploy:
     secure: pypi-AgEIcHlwaS5vcmcCJDZkNDMwMzZmLTU0ZTktNGEzNS1hMTk1LTEwYWE1ZGVlNjg3ZQACN3sicGVybWlzc2lvbnMiOiB7InByb2plY3RzIjogWyJtaW5pdGYiXX0sICJ2ZXJzaW9uIjogMX0AAAYgcRmj3EKq7VqS1CkeehXVLfvmzy9-Pgm_BSZUeMkRZUA
   on:
     tags: true
+  distributions: "sdist bdist_wheel"
+  skip_existing: true
+  twine_check: true
+  remove_build_dir: true
